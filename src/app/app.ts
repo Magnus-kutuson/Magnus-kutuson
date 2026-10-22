@@ -7,9 +7,10 @@ import {
   ViewChildren,
   QueryList,
   HostListener,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 
 interface Experience {
   title: string;
@@ -30,12 +31,14 @@ interface Education {
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './app.html',
   styleUrl: './app.css',
   encapsulation: ViewEncapsulation.None
 })
 export class App implements AfterViewInit, OnDestroy {
+  private sanitizer = inject(DomSanitizer);
+
   // ----- live ticking timecode (hero) -----
   liveTC = '00:00:00:00';
   private frame = 0;
@@ -44,6 +47,7 @@ export class App implements AfterViewInit, OnDestroy {
   // ----- scrub playhead drift -----
   scrubPos = 0;
   private scrubInterval: any;
+  scrubTicks = Array.from({ length: 20 });
 
   // ----- photo parallax tilt -----
   @ViewChild('photoFrame') photoFrame?: ElementRef<HTMLElement>;
@@ -81,46 +85,14 @@ export class App implements AfterViewInit, OnDestroy {
         'Conducted application testing to identify and fix bugs, improving overall functionality.',
         'Supported project managers in monitoring project progress and ensuring timely delivery.'
       ]
-    },
-    {
-      title: 'Intern',
-      company: 'National Health Insurance Scheme',
-      location: 'Accra, Ghana',
-      startDate: 'MAR 2022',
-      endDate: 'MAY 2022',
-      achievements: [
-        'Analyzed health insurance plans to identify the best benefits and coverage options for clients.',
-        'Developed tailored proposals that aligned with each client\'s needs and objectives.',
-        'Educated clients on insurance policies, regulations, and compliance requirements.',
-        'Guided clients in selecting suitable plans based on their preferences and financial goals.'
-      ]
-    },
-    {
-      title: 'Intern',
-      company: 'Talamus Health',
-      location: 'Accra, Ghana',
-      startDate: 'DEC 2021',
-      endDate: 'FEB 2022',
-      achievements: [
-        'Conducted market research to identify emerging trends and customer preferences.',
-        'Assisted in creating and scheduling social media content for marketing campaigns.',
-        'Collaborated with team members to develop innovative marketing ideas and strategies.',
-        'Supported event planning by coordinating logistics and preparing promotional materials.'
-      ]
-    },
-    {
-      title: 'Intern',
-      company: 'Faith Community School',
-      location: 'Accra, Ghana',
-      startDate: 'MAR 2021',
-      endDate: 'OCT 2021',
-      achievements: [
-        'Assisted in preparing classroom materials and resources to support teachers.',
-        'Helped enhance student engagement through interactive activities and learning programs.',
-        'Communicated school policies clearly to students, parents, and faculty members.',
-        'Maintained a clean, organized, and supportive learning environment for students.'
-      ]
     }
+  ];
+
+  // non-technical roles, shown as a compact list so the dev work leads
+  earlierRoles = [
+    { title: 'Intern', company: 'National Health Insurance Scheme', startDate: 'MAR 2022', endDate: 'MAY 2022', summary: 'Client advisory & tailored proposals' },
+    { title: 'Intern', company: 'Talamus Health', startDate: 'DEC 2021', endDate: 'FEB 2022', summary: 'Market research & social media content' },
+    { title: 'Intern', company: 'Faith Community School', startDate: 'MAR 2021', endDate: 'OCT 2021', summary: 'Teaching support & student engagement' }
   ];
 
   education: Education[] = [
@@ -140,21 +112,20 @@ export class App implements AfterViewInit, OnDestroy {
   ];
 
   codeSkills = [
-    'JavaScript',
-    'TypeScript',
     'Angular',
-    'Bootstrap',
+    'React',
+    'Next.js',
+    'TypeScript',
+    'JavaScript',
     'HTML / CSS',
     'Tailwind',
     'SCSS / Sass',
-    'AWS',
+    'Bootstrap',
     'Contentful',
-    'Git & GitHub',
+    'AWS',
     'Netlify / Vercel',
-    'Project Support & Coordination',
-    'Billing & Reporting',
-    'Team Collaboration & Communication',
-    'Strong Computer Literacy'
+    'Git & GitHub',
+    'Agile / Scrum'
   ];
 
   filmSkills = [
@@ -162,99 +133,131 @@ export class App implements AfterViewInit, OnDestroy {
     'Shot Composition',
     'Editing & Pacing',
     'Color Grading',
-    'Storytelling',
-    '+ Add tool'
+    'Storytelling'
   ];
 
   navItems = [
-    { label: 'About', href: '#about' },
+    { label: 'Services', href: '#services' },
     { label: 'Work', href: '#work' },
     { label: 'Experience', href: '#experience' },
     { label: 'Contact', href: '#contact' }
   ];
 
+  services = [
+    {
+      id: 'SVC_01',
+      title: 'Web Apps & Dashboards',
+      description: 'Responsive, maintainable frontends in Angular, React or Next.js — from product landing pages to data-heavy dashboards and SaaS tools.',
+      accent: 'cyan'
+    },
+    {
+      id: 'SVC_02',
+      title: 'Business Websites',
+      description: 'Fast, mobile-first marketing sites that explain what you do and turn visitors into enquiries — deployed and ready to share.',
+      accent: 'cyan'
+    },
+    {
+      id: 'SVC_03',
+      title: 'Video Production',
+      description: 'Shooting and editing for events, brands and social — composed, paced and colour graded to tell your story.',
+      accent: 'amber'
+    }
+  ];
+
+  // client-facing projects, strongest first
   workItems = [
     {
       id: 'BUILD_01',
-      title: 'Project Title',
-      description: 'One line on what it does and the stack used — e.g. Angular, TypeScript.',
-      href: '#',
-      linkLabel: 'Add project link',
-      accent: 'cyan'
+      title: 'Open Base Africa',
+      category: 'Corporate website',
+      description: 'Website for a company that builds and runs offshore teams in Ghana for international businesses — service packages, implementation roadmap, case studies and consultation booking.',
+      href: 'https://openbaseafrica.com/',
+      domain: 'openbaseafrica.com'
     },
     {
       id: 'BUILD_02',
-      title: 'Project Title',
-      description: 'One line on what it does and the stack used — e.g. React, Tailwind.',
-      href: '#',
-      linkLabel: 'Add project link',
-      accent: 'cyan'
+      title: 'Smart Data Hub',
+      category: 'Fintech · Digital services platform',
+      description: 'Platform for buying airtime, WAEC/BECE exam vouchers and utility payments across Ghana\'s networks — MTN MoMo, Telecel Cash and AT Money checkout, live order tracking and an agent/reseller programme.',
+      href: 'https://data-hub-steel.vercel.app/',
+      domain: 'data-hub-steel.vercel.app'
     },
     {
       id: 'BUILD_03',
-      title: 'Project Title',
-      description: 'One line on what it does and the stack used.',
-      href: '#',
-      linkLabel: 'Add project link',
-      accent: 'cyan'
+      title: 'QuizMasterPro',
+      category: 'EdTech · SaaS product site',
+      description: 'Product site for an assessment platform for educators — question bank, analytics, class management, secure proctoring and AI question generation.',
+      href: 'https://quiz-master-pro-ecru.vercel.app/',
+      domain: 'quiz-master-pro-ecru.vercel.app'
     },
     {
       id: 'BUILD_04',
-      title: 'Project Title',
-      description: 'One line on what it does and the stack used.',
-      href: '#',
-      linkLabel: 'Add project link',
-      accent: 'cyan'
+      title: 'ShopVerse',
+      category: 'E-commerce storefront',
+      description: 'Online store with flash-sale countdowns, category browsing, best-seller listings and add-to-cart product cards.',
+      href: 'https://exclusive-commerce-nu.vercel.app/',
+      domain: 'exclusive-commerce-nu.vercel.app'
+    },
+    {
+      id: 'BUILD_05',
+      title: 'TidyUp 24/7',
+      category: 'Service business website',
+      description: 'Marketing site for a facility management company — cleaning, landscaping and pest control — with services, gallery, onboarding steps and a request-a-quote flow.',
+      href: 'https://tidy-up-henna.vercel.app/',
+      domain: 'tidy-up-henna.vercel.app'
+    },
+    {
+      id: 'BUILD_06',
+      title: 'Gradcell',
+      category: 'Careers platform · React',
+      description: 'Internship platform helping students and graduates launch their careers, with filterable listings by category, job type and location.',
+      href: 'https://gradell-webpage.vercel.app/',
+      domain: 'gradell-webpage.vercel.app'
     }
   ];
 
+  // edited video work, hosted on Google Drive (file must be shared "Anyone with the link")
   reelItems = [
     {
       id: 'REEL_01',
-      title: 'Video Title',
-      description: 'One line on the shoot — event, style, or story.',
-      href: '#',
-      linkLabel: 'Add reel link',
-      accent: 'amber'
+      title: 'Edit 01',
+      description: 'Shot and edited by me — composition, pacing and colour.',
+      driveId: '1UUmBHxIGHbBE26uTOTURgFdE4Dcbui9T'
     },
     {
       id: 'REEL_02',
-      title: 'Video Title',
-      description: 'One line on the shoot — event, style, or story.',
-      href: '#',
-      linkLabel: 'Add reel link',
-      accent: 'amber'
+      title: 'Edit 02',
+      description: 'Shot and edited by me — composition, pacing and colour.',
+      driveId: '1y59-b9jO3ztTMGQzXTRQf_licgpzHJVc'
     },
     {
       id: 'REEL_03',
-      title: 'Video Title',
-      description: 'One line on the shoot — event, style, or story.',
-      href: '#',
-      linkLabel: 'Add reel link',
-      accent: 'amber'
-    },
-    {
-      id: 'REEL_04',
-      title: 'Video Title',
-      description: 'One line on the shoot — event, style, or story.',
-      href: '#',
-      linkLabel: 'Add reel link',
-      accent: 'amber'
+      title: 'Edit 03',
+      description: 'Shot and edited by me — composition, pacing and colour.',
+      driveId: '1LYKVOinfpMVU2nh4PeHaorIw-5Nz_E5A'
     }
-  ];
+  ].map((reel) => ({
+    ...reel,
+    href: `https://drive.google.com/file/d/${reel.driveId}/view`,
+    embedUrl: this.sanitizer.bypassSecurityTrustResourceUrl(`https://drive.google.com/file/d/${reel.driveId}/preview`)
+  }));
 
   contactLinks = [
     { label: 'abeikumagnus@gmail.com', href: 'mailto:abeikumagnus@gmail.com' },
-    { label: '+233 50 679 0655', href: 'tel:+233506790655' },
+    { label: 'WhatsApp: +233 50 679 0655 ↗', href: 'https://wa.me/233506790655?text=Hi%20Magnus%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project.' },
     { label: 'LinkedIn ↗', href: 'https://www.linkedin.com/in/magnus-kutuson/' },
+    // fill in the href and these appear automatically
     { label: 'GitHub ↗', href: '#' },
     { label: 'Instagram / Reel platform ↗', href: '#' }
   ];
- 
+
+  // hide anything still pointing at a placeholder link
+  publishedContactLinks = this.contactLinks.filter((l) => l.href !== '#');
+
   // ----- scroll reveal -----
   @ViewChildren('revealEl') revealEls!: QueryList<ElementRef<HTMLElement>>;
   private observer?: IntersectionObserver;
- 
+
   ngAfterViewInit(): void {
     // ticking film timecode, ~24fps
     this.tcInterval = setInterval(() => {
@@ -266,12 +269,18 @@ export class App implements AfterViewInit, OnDestroy {
       const f = this.pad(this.frame % 24);
       this.liveTC = `${h}:${m}:${s}:${f}`;
     }, 1000 / 24);
- 
+
     // slow drifting playhead across the timeline scrub bar
     this.scrubInterval = setInterval(() => {
       this.scrubPos = (this.scrubPos + 0.15) % 100;
     }, 50);
- 
+
+    // no IntersectionObserver (old browsers, test env) — just show everything
+    if (typeof IntersectionObserver === 'undefined') {
+      document.querySelectorAll('.reveal, [data-stagger-group] > *').forEach((el) => el.classList.add('in'));
+      return;
+    }
+
     // staggered reveal-on-scroll
     this.observer = new IntersectionObserver(
       (entries) => {
@@ -288,9 +297,9 @@ export class App implements AfterViewInit, OnDestroy {
       },
       { threshold: 0.15 }
     );
- 
+
     this.revealEls.forEach((ref) => this.observer!.observe(ref.nativeElement));
- 
+
     // apply stagger index to any group marked [data-stagger-group]
     document.querySelectorAll('[data-stagger-group]').forEach((group) => {
       Array.from(group.children).forEach((child, idx) => {
@@ -299,17 +308,17 @@ export class App implements AfterViewInit, OnDestroy {
       });
     });
   }
- 
+
   ngOnDestroy(): void {
     clearInterval(this.tcInterval);
     clearInterval(this.scrubInterval);
     this.observer?.disconnect();
   }
- 
+
   private pad(n: number): string {
     return n.toString().padStart(2, '0');
   }
- 
+
   // mouse-parallax tilt on the profile photo frame — subtle, like adjusting a viewfinder
   @HostListener('window:mousemove', ['$event'])
   onMouseMove(e: MouseEvent): void {
@@ -317,10 +326,10 @@ export class App implements AfterViewInit, OnDestroy {
     const rect = this.heroEl.nativeElement.getBoundingClientRect();
     const relX = (e.clientX - rect.left) / rect.width - 0.5;
     const relY = (e.clientY - rect.top) / rect.height - 0.5;
- 
+
     // only tilt while cursor is roughly within the hero area
     if (e.clientY < rect.top || e.clientY > rect.bottom) return;
- 
+
     const rotateY = relX * 10;
     const rotateX = relY * -10;
     this.photoTransform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;

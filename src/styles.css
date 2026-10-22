@@ -37,6 +37,14 @@ body {
     @apply opacity-100 translate-y-0;
   }
 
+  /* project / service cards fade in when their stagger group scrolls into view */
+  .card {
+    @apply opacity-0 translate-y-4;
+  }
+  .card.in {
+    @apply opacity-100 translate-y-0;
+  }
+
   .tag {
     @apply text-ink;
   }

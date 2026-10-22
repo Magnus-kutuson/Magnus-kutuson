@@ -4,19 +4,20 @@
   <div class="absolute w-[360px] h-[360px] rounded-full bg-cyan blur-[70px] opacity-25 -bottom-36 -right-20 animate-drift2"></div>
 </div>
 
-<nav class="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-8 py-5 bg-gradient-to-b from-bg/90 to-transparent backdrop-blur-[2px]">
-  <div class="font-mono text-[13px] tracking-wider text-muted flex items-center gap-2">
+<nav class="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-5 sm:px-8 py-5 bg-gradient-to-b from-bg/90 to-transparent backdrop-blur-[2px]">
+  <a href="#" class="font-mono text-[13px] tracking-wider text-muted flex items-center gap-2">
     <span class="w-[7px] h-[7px] rounded-full bg-[#e8503d] shadow-[0_0_8px_#e8503d] animate-pulse-dot"></span>
     MAGNUS.KUTUSON
-  </div>
-  <div class="flex gap-7 text-[13px] text-muted">
+  </a>
+  <div class="hidden sm:flex gap-7 text-[13px] text-muted">
     @for (navItem of navItems; track navItem.href) {
       <a [href]="navItem.href" class="relative hover:text-ink transition-colors group">{{ navItem.label }}<span class="absolute left-0 -bottom-1 w-0 h-px bg-cyan transition-all duration-300 group-hover:w-full"></span></a>
     }
   </div>
+  <a href="#contact" class="sm:hidden font-mono text-xs text-cyan border border-line px-3 py-2 rounded-sm">Hire me</a>
 </nav>
 
-<div class="relative z-[1] max-w-[1080px] mx-auto px-8">
+<div class="relative z-[1] max-w-[1080px] mx-auto px-5 sm:px-8">
 
   <!-- HERO -->
   <header #heroEl class="min-h-[100svh] flex flex-col-reverse md:flex-row items-center gap-9 md:gap-14 pt-20">
@@ -32,18 +33,23 @@
       </h1>
 
       <p class="mt-6 text-base sm:text-lg text-muted max-w-[520px] opacity-0 animate-fade-up [animation-delay:.4s]">
-        Frontend developer building with <strong class="text-ink font-medium">Angular</strong> &amp;
-        <strong class="text-ink font-medium">React</strong> by day — videographer shaping stories
-        through the lens by night. Two crafts, one eye for detail.
+        I build fast, modern websites and web apps with <strong class="text-ink font-medium">Angular</strong> &amp;
+        <strong class="text-ink font-medium">React / Next.js</strong> — and shoot and edit video that tells your story.
+        Two crafts, one eye for detail.
       </p>
 
-      <div class="flex gap-4 flex-wrap mt-11 opacity-0 animate-fade-up [animation-delay:.55s]">
+      <div class="mt-6 inline-flex items-center gap-2 font-mono text-xs text-cyan border border-line rounded-sm px-3 py-1.5 opacity-0 animate-fade-up [animation-delay:.48s]">
+        <span class="w-1.5 h-1.5 rounded-full bg-cyan animate-pulse-dot"></span>
+        Available for freelance &amp; contract projects
+      </div>
+
+      <div class="flex gap-4 flex-wrap mt-9 opacity-0 animate-fade-up [animation-delay:.55s]">
         <a href="#work" class="group relative overflow-hidden font-mono text-[13px] px-5 py-3.5 rounded-sm bg-ink text-bg border border-ink transition-transform hover:-translate-y-0.5">
           View the work
           <span class="btn-shine"></span>
         </a>
-        <a href="mailto:abeikumagnus@gmail.com" class="group relative overflow-hidden font-mono text-[13px] px-5 py-3.5 rounded-sm border border-line transition-all hover:-translate-y-0.5 hover:border-muted">
-          Get in touch
+        <a href="mailto:abeikumagnus@gmail.com?subject=Project%20enquiry" class="group relative overflow-hidden font-mono text-[13px] px-5 py-3.5 rounded-sm border border-line transition-all hover:-translate-y-0.5 hover:border-muted">
+          Start a project
           <span class="btn-shine"></span>
         </a>
       </div>
@@ -77,11 +83,12 @@
   </header>
 
   <!-- scrub timeline divider -->
-  <div class="relative h-10 flex items-end">
+  <div class="relative h-10 flex items-end" aria-hidden="true">
     <div class="relative w-full h-px bg-line">
       <div class="absolute inset-0 flex justify-between items-center">
-        <span *ngFor="let t of [].constructor(20); let i = index"
-              class="w-px bg-linesoft" [class.h-3.5]="i % 4 === 0" [class.bg-muted2]="i % 4 === 0" [class.h-2]="i % 4 !== 0"></span>
+        @for (t of scrubTicks; track $index; let i = $index) {
+          <span class="w-px bg-linesoft" [class.h-3.5]="i % 4 === 0" [class.bg-muted2]="i % 4 === 0" [class.h-2]="i % 4 !== 0"></span>
+        }
       </div>
       <div class="absolute -top-[5px] w-0.5 h-[11px] bg-amber shadow-[0_0_6px_theme(colors.amber)]" [style.left.%]="scrubPos"></div>
     </div>
@@ -97,80 +104,144 @@
     <div #revealEl class="reveal grid grid-cols-1 md:grid-cols-[1.3fr_1fr] gap-10 md:gap-14">
       <div>
         <p class="text-muted text-[1.05rem] max-w-[52ch]">
-          Detail-oriented and creative frontend developer with strong analytical
-          and problem-solving instincts, passionate about building modern,
-          user-friendly interfaces and improving team efficiency through
-          clean, scalable code.
+          I'm a frontend developer with 2+ years of professional software engineering
+          experience at AmaliTech, building modern, user-friendly interfaces with
+          clean, scalable code — and shipping them to production.
         </p>
         <p class="text-muted text-[1.05rem] max-w-[52ch] mt-4">
-          Comfortable in Agile and Scrum environments, I enjoy collaborating
-          across teams to deliver smooth, high-quality digital experiences —
-          and outside the editor, I bring the same eye for composition and
-          pacing to video work.
+          I work well with founders, small businesses and product teams: I communicate
+          clearly, work in Agile sprints, and care about the details that make a site feel
+          right. Outside the editor, I bring the same eye for composition and pacing to video work.
         </p>
       </div>
       <div class="flex flex-row md:flex-col flex-wrap gap-5 border-t md:border-t-0 md:border-l border-line pt-6 md:pt-0 md:pl-7">
         <div><b class="font-display font-medium text-2xl sm:text-3xl text-amber block">2+ yrs</b><span class="text-xs text-muted font-mono tracking-wide">Software Engineering</span></div>
-        <div><b class="font-display font-medium text-2xl sm:text-3xl text-amber block">5</b><span class="text-xs text-muted font-mono tracking-wide">Internships Completed</span></div>
+        <div><b class="font-display font-medium text-2xl sm:text-3xl text-amber block">{{ workItems.length }}</b><span class="text-xs text-muted font-mono tracking-wide">Live Projects Shipped</span></div>
         <div><b class="font-display font-medium text-2xl sm:text-3xl text-amber block">3</b><span class="text-xs text-muted font-mono tracking-wide">Languages Spoken</span></div>
       </div>
     </div>
   </section>
 
+  <!-- SERVICES -->
+  <section id="services" class="pt-28 pb-5">
+    <div #revealEl class="reveal flex items-baseline gap-4 mb-14">
+      <span class="font-mono text-xs text-cyan tracking-wide whitespace-nowrap">00:00:09:12</span>
+      <h2 class="font-display font-medium text-2xl sm:text-3xl lg:text-4xl">What I Can Do For You</h2>
+      <div class="relative flex-1 h-px bg-line"><span class="section-underline"></span></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4.5" data-stagger-group>
+      @for (service of services; track service.id) {
+        <div class="card transition-all duration-300 border border-line rounded-sm p-6 bg-panel hover:-translate-y-1 hover:bg-panel2"
+             [class.hover:border-cyan]="service.accent === 'cyan'" [class.hover:border-amber]="service.accent === 'amber'">
+          <span class="font-mono text-[11px] block mb-4" [class.text-cyan]="service.accent === 'cyan'" [class.text-amber]="service.accent === 'amber'">{{ service.id }}</span>
+          <h3 class="font-semibold mb-2">{{ service.title }}</h3>
+          <p class="text-muted text-sm">{{ service.description }}</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work" class="pt-28 pb-5">
+    <div #revealEl class="reveal flex items-baseline gap-4 mb-14">
+      <span class="font-mono text-xs text-cyan tracking-wide whitespace-nowrap">00:00:18:05</span>
+      <h2 class="font-display font-medium text-2xl sm:text-3xl lg:text-4xl">Selected Work</h2>
+      <div class="relative flex-1 h-px bg-line"><span class="section-underline"></span></div>
+    </div>
+
+    <div>
+      <div class="font-mono text-xs tracking-wider uppercase text-muted mb-6 flex items-center gap-2.5 after:content-[''] after:flex-1 after:h-px after:bg-linesoft">Builds</div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4.5" data-stagger-group>
+        @for (workItem of workItems; track workItem.id; let first = $first) {
+          <a [href]="workItem.href" target="_blank" rel="noopener"
+             class="card group flex flex-col transition-all duration-300 border border-line rounded-sm p-6 bg-panel hover:-translate-y-1 hover:bg-panel2 hover:border-cyan hover:shadow-[0_8px_24px_-12px_rgba(82,209,197,0.35)]"
+             [class.sm:col-span-2]="first">
+            <span class="font-mono text-[11px] text-muted2 flex justify-between gap-3 mb-4">
+              <span>{{ workItem.id }}</span>
+              <span class="text-muted">{{ workItem.category }}</span>
+            </span>
+            <h3 class="font-semibold mb-2" [class.text-xl]="first">{{ workItem.title }}</h3>
+            <p class="text-muted text-sm mb-5 flex-1">{{ workItem.description }}</p>
+            <span class="font-mono text-xs text-cyan self-start border-b border-dashed border-line pb-0.5 inline-flex items-center gap-1.5 group-hover:border-cyan">
+              View live site ↗ <span class="text-muted2">{{ workItem.domain }}</span>
+            </span>
+          </a>
+        }
+      </div>
+
+      @if (reelItems.length) {
+        <div class="font-mono text-xs tracking-wider uppercase text-muted mt-11 mb-6 flex items-center gap-2.5 after:content-[''] after:flex-1 after:h-px after:bg-linesoft">Reels</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4.5" data-stagger-group>
+          @for (reelItem of reelItems; track reelItem.id) {
+            <div class="card flex flex-col transition-all duration-300 border border-line rounded-sm bg-panel hover:-translate-y-1 hover:bg-panel2 hover:border-amber hover:shadow-[0_8px_24px_-12px_rgba(232,163,61,0.35)]">
+              <div class="relative aspect-video bg-bg border-b border-line">
+                <iframe [src]="reelItem.embedUrl" [title]="reelItem.title" loading="lazy"
+                        allow="autoplay; fullscreen" allowfullscreen
+                        class="absolute inset-0 w-full h-full border-0"></iframe>
+              </div>
+              <div class="p-5 flex flex-col flex-1">
+                <span class="font-mono text-[11px] text-muted2 block mb-3">{{ reelItem.id }}</span>
+                <h3 class="font-semibold mb-2">{{ reelItem.title }}</h3>
+                <p class="text-muted text-sm mb-4 flex-1">{{ reelItem.description }}</p>
+                <a [href]="reelItem.href" target="_blank" rel="noopener" class="font-mono text-xs text-amber self-start border-b border-dashed border-line pb-0.5 inline-flex items-center gap-1.5">Watch full screen ↗</a>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </section>
+
   <!-- SKILLS -->
   <section id="skills" class="pt-28 pb-5">
-  <div #revealEl class="reveal flex items-baseline gap-4 mb-14">
-    <span class="font-mono text-xs text-cyan tracking-wide whitespace-nowrap">00:00:09:12</span>
-    <h2 class="font-display font-medium text-2xl sm:text-3xl lg:text-4xl">Skills</h2>
-    <div class="relative flex-1 h-px bg-line">
-      <span class="section-underline"></span>
+    <div #revealEl class="reveal flex items-baseline gap-4 mb-14">
+      <span class="font-mono text-xs text-cyan tracking-wide whitespace-nowrap">00:00:27:20</span>
+      <h2 class="font-display font-medium text-2xl sm:text-3xl lg:text-4xl">Toolkit</h2>
+      <div class="relative flex-1 h-px bg-line"><span class="section-underline"></span></div>
     </div>
-  </div>
 
-  <div #revealEl class="reveal grid grid-cols-1 md:grid-cols-2 gap-px bg-line border border-line">
+    <div #revealEl class="reveal grid grid-cols-1 md:grid-cols-2 gap-px bg-line border border-line">
 
-    <!-- Code Skills -->
-    <div class="bg-bg p-9">
-      <h3 class="font-mono text-xs tracking-wider uppercase mb-6 flex items-center gap-2.5 text-cyan">
-        <span class="w-1.5 h-1.5 bg-cyan"></span>
-        On the Timeline — Code
-      </h3>
-
-      <div class="flex flex-wrap gap-2.5" data-stagger-group>
-        @for (skill of codeSkills; track skill) {
-          <span class="tag font-mono text-[12.5px] px-3 py-1.5 border border-line rounded-sm text-ink transition-all duration-500 hover:border-cyan hover:text-ink">{{ skill }}</span>
-        }
+      <!-- Code Skills -->
+      <div class="bg-bg p-7 sm:p-9">
+        <h3 class="font-mono text-xs tracking-wider uppercase mb-6 flex items-center gap-2.5 text-cyan">
+          <span class="w-1.5 h-1.5 bg-cyan"></span>
+          On the Timeline — Code
+        </h3>
+        <div class="flex flex-wrap gap-2.5" data-stagger-group>
+          @for (skill of codeSkills; track skill) {
+            <span class="tag font-mono text-[12.5px] px-3 py-1.5 border border-line rounded-sm text-ink transition-all duration-500 hover:border-cyan">{{ skill }}</span>
+          }
+        </div>
       </div>
-    </div>
 
-    <!-- Film Skills -->
-    <div class="bg-bg p-9">
-      <h3 class="font-mono text-xs tracking-wider uppercase mb-6 flex items-center gap-2.5 text-amber">
-        <span class="w-1.5 h-1.5 bg-amber"></span>
-        On the Reel — Film
-      </h3>
-
-      <div class="flex flex-wrap gap-2.5" data-stagger-group>
-        @for (skill of filmSkills; track skill) {
-         <span class="tag font-mono text-[12.5px] px-3 py-1.5 border border-line rounded-sm text-ink transition-all duration-500 hover:border-cyan hover:text-ink">{{ skill }}</span>
-        }
+      <!-- Film Skills -->
+      <div class="bg-bg p-7 sm:p-9">
+        <h3 class="font-mono text-xs tracking-wider uppercase mb-6 flex items-center gap-2.5 text-amber">
+          <span class="w-1.5 h-1.5 bg-amber"></span>
+          On the Reel — Film
+        </h3>
+        <div class="flex flex-wrap gap-2.5" data-stagger-group>
+          @for (skill of filmSkills; track skill) {
+            <span class="tag font-mono text-[12.5px] px-3 py-1.5 border border-line rounded-sm text-ink transition-all duration-500 hover:border-amber">{{ skill }}</span>
+          }
+        </div>
       </div>
-    </div>
 
-  </div>
-</section>
+    </div>
+  </section>
 
   <!-- EXPERIENCE -->
   <section id="experience" class="pt-28 pb-5">
     <div #revealEl class="reveal flex items-baseline gap-4 mb-14">
-      <span class="font-mono text-xs text-cyan tracking-wide whitespace-nowrap">00:00:18:05</span>
+      <span class="font-mono text-xs text-cyan tracking-wide whitespace-nowrap">00:00:34:00</span>
       <h2 class="font-display font-medium text-2xl sm:text-3xl lg:text-4xl">Experience</h2>
       <div class="relative flex-1 h-px bg-line"><span class="section-underline"></span></div>
     </div>
     <div #revealEl class="reveal flex flex-col">
-      @for (experience of experiences; let isLast = $last; track experience.company) {
-      <div class="group grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-2 sm:gap-8 py-7 transition-all hover:pl-2" [class.border-t]="true" [class.border-y]="isLast" [class.border-linesoft]="true" [class.hover:border-line]="true">
-        <div class="font-mono text-[12.5px] text-muted pt-1">{{ experience.startDate }} —<br>{{ experience.endDate }}</div>
+      @for (experience of experiences; let isLast = $last; track experience.title + experience.startDate) {
+      <div class="group grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-2 sm:gap-8 py-7 transition-all hover:pl-2 border-t border-linesoft" [class.border-b]="isLast">
+        <div class="font-mono text-[12.5px] text-muted pt-1">{{ experience.startDate }} —<br class="hidden sm:inline"> {{ experience.endDate }}</div>
         <div>
           <div class="text-lg font-medium">{{ experience.title }}</div>
           <div class="text-muted text-sm mt-0.5">{{ experience.company }} · {{ experience.location }}</div>
@@ -183,54 +254,31 @@
       </div>
       }
     </div>
-  </section>
 
-  <!-- WORK -->
-  <section id="work" class="pt-28 pb-5">
-    <div #revealEl class="reveal flex items-baseline gap-4 mb-14">
-      <span class="font-mono text-xs text-cyan tracking-wide whitespace-nowrap">00:00:27:20</span>
-      <h2 class="font-display font-medium text-2xl sm:text-3xl lg:text-4xl">Selected Work</h2>
-      <div class="relative flex-1 h-px bg-line"><span class="section-underline"></span></div>
-    </div>
-
-    <div>
-      <div class="font-mono text-xs tracking-wider uppercase text-muted mb-6 flex items-center gap-2.5 after:content-[''] after:flex-1 after:h-px after:bg-linesoft">Builds</div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4.5" data-stagger-group>
-        @for (workItem of workItems; track workItem.id) {
-          <div class="card opacity-0 translate-y-4 transition-all duration-300 border border-line rounded-sm p-6 bg-panel hover:-translate-y-1 hover:bg-panel2 hover:border-cyan hover:shadow-[0_8px_24px_-12px_rgba(82,209,197,0.35)]">
-            <span class="font-mono text-[11px] text-muted2 block mb-4">{{ workItem.id }}</span>
-            <h4 class="font-semibold mb-2">{{ workItem.title }}</h4>
-            <p class="text-muted text-sm mb-5">{{ workItem.description }}</p>
-            <a [href]="workItem.href" class="font-mono text-xs text-cyan border-b border-dashed border-line pb-0.5 inline-flex items-center gap-1.5 after:content-['↗']">{{ workItem.linkLabel }}</a>
-          </div>
+    <div #revealEl class="reveal mt-10">
+      <div class="font-mono text-xs tracking-wider uppercase text-muted mb-4 flex items-center gap-2.5 after:content-[''] after:flex-1 after:h-px after:bg-linesoft">Earlier roles</div>
+      <ul class="flex flex-col">
+        @for (role of earlierRoles; track role.company) {
+          <li class="grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-1 sm:gap-8 py-3 text-sm border-b border-linesoft">
+            <span class="font-mono text-[12px] text-muted2">{{ role.startDate }} — {{ role.endDate }}</span>
+            <span><span class="text-ink">{{ role.title }}, {{ role.company }}</span> <span class="text-muted">· {{ role.summary }}</span></span>
+          </li>
         }
-      </div>
-
-      <div class="font-mono text-xs tracking-wider uppercase text-muted mt-11 mb-6 flex items-center gap-2.5 after:content-[''] after:flex-1 after:h-px after:bg-linesoft">Reels</div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4.5" data-stagger-group>
-        @for (reelItem of reelItems; track reelItem.id) {
-          <div class="card opacity-0 translate-y-4 transition-all duration-300 border border-line rounded-sm p-6 bg-panel hover:-translate-y-1 hover:bg-panel2 hover:border-amber hover:shadow-[0_8px_24px_-12px_rgba(232,163,61,0.35)]">
-            <span class="font-mono text-[11px] text-muted2 block mb-4">{{ reelItem.id }}</span>
-            <h4 class="font-semibold mb-2">{{ reelItem.title }}</h4>
-            <p class="text-muted text-sm mb-5">{{ reelItem.description }}</p>
-            <a [href]="reelItem.href" class="font-mono text-xs text-amber border-b border-dashed border-line pb-0.5 inline-flex items-center gap-1.5 after:content-['↗']">{{ reelItem.linkLabel }}</a>
-          </div>
-        }
-      </div>
+      </ul>
     </div>
   </section>
 
   <!-- EDUCATION -->
   <section id="education" class="pt-28 pb-5">
     <div #revealEl class="reveal flex items-baseline gap-4 mb-14">
-      <span class="font-mono text-xs text-cyan tracking-wide whitespace-nowrap">00:00:34:00</span>
+      <span class="font-mono text-xs text-cyan tracking-wide whitespace-nowrap">00:00:38:10</span>
       <h2 class="font-display font-medium text-2xl sm:text-3xl lg:text-4xl">Education</h2>
       <div class="relative flex-1 h-px bg-line"><span class="section-underline"></span></div>
     </div>
     @for (edu of education; track edu.school) {
     <div #revealEl class="reveal border border-line p-7 flex justify-between flex-wrap gap-4 items-start">
       <div>
-        <h4 class="text-lg font-semibold">{{ edu.degree }}</h4>
+        <h3 class="text-lg font-semibold">{{ edu.degree }}</h3>
         <div class="text-muted text-sm mt-1">{{ edu.school }}</div>
         <div class="text-muted2 text-sm mt-4 max-w-[60ch]">
           {{ edu.coursework.join(' · ') }}
@@ -251,9 +299,14 @@
     <h3 #revealEl class="reveal font-display font-medium italic text-[2rem] sm:text-[2.8rem] lg:text-[3.4rem] max-w-[680px] leading-tight">
       Let's build or shoot<br>something worth watching.
     </h3>
+    <p #revealEl class="reveal text-muted mt-6 max-w-[52ch]">
+      Have a website, web app or video project in mind? Send a short note about what you need
+      and your timeline, and I'll get back to you.
+    </p>
     <div #revealEl class="reveal flex flex-wrap gap-3.5 mt-10">
-      @for (link of contactLinks; track link.label) {
-        <a [href]="link.href" class="font-mono text-[13.5px] px-5 py-3.5 border border-line rounded-sm transition-all hover:border-cyan hover:text-cyan hover:-translate-y-0.5">{{ link.label }}</a>
+      @for (link of publishedContactLinks; track link.label) {
+        <a [href]="link.href" [attr.target]="link.href.startsWith('http') ? '_blank' : null" rel="noopener"
+           class="font-mono text-[13.5px] px-5 py-3.5 border border-line rounded-sm transition-all hover:border-cyan hover:text-cyan hover:-translate-y-0.5">{{ link.label }}</a>
       }
     </div>
 
