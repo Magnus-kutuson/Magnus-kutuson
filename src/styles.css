@@ -1,3 +1,86 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
 @import 'tailwindcss';
+@config '../tailwind.config.js';
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-bg text-ink font-sans;
+}
+
+::selection {
+  @apply bg-amber text-bg;
+}
+
+@layer components {
+  /* film grain overlay, fixed over the whole page */
+  .grain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* scroll-reveal base state, toggled to .in via IntersectionObserver in the component */
+  .reveal {
+    @apply opacity-0 translate-y-[18px] transition-all duration-700 ease-out;
+  }
+  .reveal.in {
+    @apply opacity-100 translate-y-0;
+  }
+
+  .tag {
+    @apply text-ink;
+  }
+
+  .tag.in {
+    @apply opacity-100 translate-y-0 text-ink;
+  }
+
+  /* corner bracket stroke, animated draw-in via animate-draw utility */
+  .corner-path {
+    fill: none;
+    stroke: theme('colors.amber');
+    stroke-width: 2;
+    stroke-dasharray: 40;
+    stroke-dashoffset: 40;
+  }
+
+  /* section underline draw-in, triggered when parent gets .in */
+  .section-underline {
+    @apply absolute inset-0 bg-cyan origin-left scale-x-0 transition-transform duration-700 ease-out;
+  }
+  .reveal.in .section-underline {
+    @apply scale-x-100;
+  }
+
+  /* button shine sweep element */
+  .btn-shine {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.18), transparent);
+    transform: skewX(-20deg);
+  }
+  .group:hover .btn-shine {
+    @apply animate-shine;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
