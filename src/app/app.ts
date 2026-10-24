@@ -8,7 +8,8 @@ import {
   QueryList,
   HostListener,
   ViewEncapsulation,
-  inject
+  inject,
+  signal
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -239,8 +240,16 @@ export class App implements AfterViewInit, OnDestroy {
   ].map((reel) => ({
     ...reel,
     href: `https://drive.google.com/file/d/${reel.driveId}/view`,
-    embedUrl: this.sanitizer.bypassSecurityTrustResourceUrl(`https://drive.google.com/file/d/${reel.driveId}/preview`)
+    embedUrl: this.sanitizer.bypassSecurityTrustResourceUrl(`https://drive.google.com/file/d/${reel.driveId}/preview`),
+    thumbnailUrl: `https://drive.google.com/thumbnail?id=${reel.driveId}&sz=w800`
   }));
+
+  // reels whose Drive player has been loaded (click-to-play keeps Google's scripts off initial load)
+  playingReels = signal(new Set<string>());
+
+  playReel(id: string): void {
+    this.playingReels.update((ids) => new Set(ids).add(id));
+  }
 
   contactLinks = [
     { label: 'abeikumagnus@gmail.com', href: 'mailto:abeikumagnus@gmail.com' },
